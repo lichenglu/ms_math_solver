@@ -12,15 +12,15 @@ export class SolvedResult {
   }
 
   get beginnerUnderstandableAnswerIdx(): number {
-    return this.previewData.mathSolverResult.actions.findIndex(
+    return this.previewData.mathSolverResult.actions?.findIndex(
         (action) =>
           action.actionName.toLowerCase().includes("evaluate") ||
           action.actionName.toLowerCase().includes("solve")
-      );
+      ) ?? 0;
   }
 
   get answer(): MSMathSolver.MSMathSolverResultAction | undefined {
-    return this.previewData.mathSolverResult.actions[this.beginnerUnderstandableAnswerIdx];
+    return this.previewData.mathSolverResult.actions?.[this.beginnerUnderstandableAnswerIdx];
   }
 
   get solveSteps(): MSMathSolver.MSMathSolverResultActionStep[] {
