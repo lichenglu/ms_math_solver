@@ -86,7 +86,7 @@ export const initService = ({
     const previewData = JSON.parse(
       data.previewText
     ) as MSMathSolver.MSSolveLatexActionPreviewData;
-    const solvedResult = new SolvedResult(previewData)
+    const solvedResult = new SolvedResult(latex, previewData)
 
     if (solvedResult.relatedVideos.length <= 0 && fallbackToYoutubeVideos) {
       if (solvedResult.relatedConcepts.length > 0) {
