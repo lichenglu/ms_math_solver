@@ -29,15 +29,31 @@ export class SolvedResult {
     return this.previewData.equationId
   }
 
-  get answer(): MSMathSolver.MSMathSolverResultAction | undefined {
-    return this.previewData.mathSolverResult?.actions?.[this.beginnerUnderstandableAnswerIdx];
+  private get rawAnswer(): MSMathSolver.MSMathSolverResultAction | undefined {
+    return this.previewData.mathSolverResult?.actions?.[this.beginnerUnderstandableAnswerIdx]
+  }
+
+  get answer(): Omit<MSMathSolver.MSMathSolverResultAction, 'templateSteps'> | undefined {
+    const target = this.rawAnswer
+    
+    if (!target) {
+      return
+    }
+
+    const { actionName, solution, mathType } = target
+
+    return {
+      actionName, 
+      solution, 
+      mathType
+    }
   }
 
   get solveSteps(): {
     name: string,
     steps: MSMathSolver.MSMathSolverResultActionStep[]
   } | undefined {
-    const template = this.answer?.templateSteps?.[0]
+    const template = this.rawAnswer?.templateSteps?.[0]
     return template &&  {
       name: template.templateName,
       steps: template.steps ?? []
@@ -48,7 +64,7 @@ export class SolvedResult {
     name: string,
     steps: MSMathSolver.MSMathSolverResultActionStep[]
   }[] | undefined {
-    return this.answer?.templateSteps?.slice(1).map(template => {
+    return this.rawAnswer?.templateSteps?.slice(1).map(template => {
       return {
         name: template.templateName,
         steps: template.steps ?? []

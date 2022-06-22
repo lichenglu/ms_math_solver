@@ -1,6 +1,6 @@
 {
   "name": "ms_math_solver_api",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "An opinionated api wrapper of MS Math Solver for my dissertation",
   "main": "dist/index.js",
   "typings": "dist/lib/index.d.ts",
