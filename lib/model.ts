@@ -1,3 +1,4 @@
+import { uniqBy } from 'ramda'
 import * as MSMathSolver from "./types";
 
 export class SolvedResult {
@@ -86,5 +87,13 @@ export class SolvedResult {
 
   setVideos(videos: MSMathSolver.MSVideo[]) {
       this.previewData.videos = videos
+  }
+
+  setConcepts(concepts: MSMathSolver.MSEntity[]) {
+      this.previewData.entities = concepts
+  }
+
+  appendConcepts(concepts: MSMathSolver.MSEntity[]) {
+      this.previewData.entities = uniqBy((ent) => ent.url, [...this.previewData.entities, ...concepts])
   }
 }

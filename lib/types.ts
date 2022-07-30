@@ -163,3 +163,9 @@ export interface MSMathSolverResultActionStep {
   expression: string;
   prevExpression: string;
 }
+
+export interface MSCustomBingAnswer {
+  entities: MSEntity[],
+  videos: MSVideo[],
+  worksheets: MSWebResult[]
+}

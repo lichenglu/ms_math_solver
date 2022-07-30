@@ -1,6 +1,7 @@
 import { google } from "googleapis";
+// import { writeFileSync } from 'fs'
 
-import { solveLatex } from "./endpoints";
+import { solveLatex, generateCustomBingAnswers } from "./endpoints";
 import * as MSMathSolver from "./types";
 import { parseYoutubeToMS } from "./utils";
 
@@ -87,6 +88,27 @@ export const initService = ({
       data.previewText
     ) as MSMathSolver.MSSolveLatexActionPreviewData;
     const solvedResult = new SolvedResult(latex, previewData)
+
+    // writeFileSync('/Users/chengluli/developer/ms_math_solver_api/examples.json', data.previewText)
+
+    if (solvedResult.relatedConcepts.length < 3 && solvedResult.solveSteps?.name) {
+      try {
+        const bingRes = await generateCustomBingAnswers({
+          queryInfo: {
+            market: 'en',
+            stepTypes: [solvedResult.solveSteps.name],
+            problemType: previewData.mathSolverResult.problemCategoryDisplayName
+          }
+        })
+        if (solvedResult.relatedConcepts.length === 0) {
+          solvedResult.setConcepts(bingRes.data!.entities)
+        } else {
+          solvedResult.appendConcepts(bingRes.data!.entities)
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
     if (solvedResult.relatedVideos.length <= 0 && fallbackToYoutubeVideos) {
       if (solvedResult.relatedConcepts.length > 0) {
