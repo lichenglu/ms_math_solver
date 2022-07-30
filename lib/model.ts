@@ -6,7 +6,8 @@ export class SolvedResult {
   private equation: string;
 
   private advancedTopics = [
-      'differentiable function'
+      'differentiable function',
+      'matrix'
   ]
 
   constructor(equation: string, previewData: MSMathSolver.MSSolveLatexActionPreviewData) {

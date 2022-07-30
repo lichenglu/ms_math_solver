@@ -166,6 +166,8 @@ export interface MSMathSolverResultActionStep {
 
 export interface MSCustomBingAnswer {
   entities: MSEntity[],
+  // MS' API has a typo...they sent entites instead of entities
+  entites: MSEntity[],
   videos: MSVideo[],
   worksheets: MSWebResult[]
 }

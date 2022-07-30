@@ -100,10 +100,12 @@ export const initService = ({
             problemType: previewData.mathSolverResult.problemCategoryDisplayName
           }
         })
+        const newEntities = (bingRes.data!.entites ?? bingRes.data!.entities)
         if (solvedResult.relatedConcepts.length === 0) {
-          solvedResult.setConcepts(bingRes.data!.entities)
+          console.log('hello')
+          solvedResult.setConcepts(newEntities)
         } else {
-          solvedResult.appendConcepts(bingRes.data!.entities)
+          solvedResult.appendConcepts(newEntities)
         }
       } catch (err) {
         console.log(err);
