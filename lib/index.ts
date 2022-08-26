@@ -102,7 +102,6 @@ export const initService = ({
         })
         const newEntities = (bingRes.data!.entites ?? bingRes.data!.entities)
         if (solvedResult.relatedConcepts.length === 0) {
-          console.log('hello')
           solvedResult.setConcepts(newEntities)
         } else {
           solvedResult.appendConcepts(newEntities)
